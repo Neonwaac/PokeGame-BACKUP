@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokegame/components/header_back.dart';
-import 'package:pokegame/themes/palette.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -9,8 +8,10 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     const logoUrl = "https://i.imgur.com/UazX9hl.png";
 
+    final colors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.primaryPurple,
       appBar: HeaderBack(title: "¿Cómo jugar?"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -23,7 +24,7 @@ class AboutPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.shadow,
+                      color: colors.shadow,
                       blurRadius: 15,
                       spreadRadius: 2,
                       offset: const Offset(0, 6),
@@ -38,23 +39,23 @@ class AboutPage extends StatelessWidget {
             // Texto introductorio
             Text(
               "¡Bienvenido a Pokegames! ✨",
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              style: textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.yellowAccent,
+                color: colors.primary,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 12),
             Text(
               "Pon a prueba tu memoria, tu rapidez y tus conocimientos del mundo Pokémon con nuestros mini-juegos.",
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.boneWhite),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colors.primary,
+              ),
               textAlign: TextAlign.center,
             ),
 
             const SizedBox(height: 30),
-            Divider(color: AppColors.purpleLight),
+            Divider(color: colors.primary),
             const SizedBox(height: 20),
 
             // Explicación de los juegos
@@ -62,7 +63,6 @@ class AboutPage extends StatelessWidget {
               title: "Guess the Type",
               description:
                   "El reto es adivinar los tipos de cada Pokémon. ¿Será Fuego, Planta, Acero? Si aciertas, ganas puntos y avanzas; si fallas… ¡aprendes algo nuevo!",
-              color: Colors.deepPurple,
               icon: Icons.extension,
             ),
             const SizedBox(height: 20),
@@ -70,20 +70,19 @@ class AboutPage extends StatelessWidget {
               title: "Guess the Pokémon",
               description:
                   "La clásica silueta misteriosa… ¿Quién es ese Pokémon? Elige entre varias opciones y demuestra cuánto sabes de la Pokédex.",
-              color: Colors.redAccent,
               icon: Icons.catching_pokemon,
             ),
 
             const SizedBox(height: 30),
-            Divider(color: AppColors.purpleLight),
+            Divider(color: colors.primary),
             const SizedBox(height: 20),
 
             // Cierre
             Text(
               "¿Listo para jugar? 🌟",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.accentGreen,
+                color: colors.primary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -97,31 +96,32 @@ class AboutPage extends StatelessWidget {
 class _GameCard extends StatelessWidget {
   final String title;
   final String description;
-  final Color color;
   final IconData icon;
 
   const _GameCard({
     required this.title,
     required this.description,
-    required this.color,
     required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Card(
-      color: AppColors.purpleTransparent,
+      color: colors.surface,
       elevation: 6,
-      shadowColor: AppColors.shadow,
+      shadowColor: colors.shadow,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(18),
         child: Row(
           children: [
             CircleAvatar(
-              backgroundColor: AppColors.shadow,
+              backgroundColor: colors.primary,
               radius: 30,
-              child: Icon(icon, size: 32, color: color),
+              child: Icon(icon, size: 32, color: colors.onPrimary),
             ),
             const SizedBox(width: 18),
             Expanded(
@@ -130,16 +130,16 @@ class _GameCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: color,
+                      color: colors.primary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     description,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.boneWhite,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colors.onSurface,
                     ),
                   ),
                 ],
@@ -151,3 +151,4 @@ class _GameCard extends StatelessWidget {
     );
   }
 }
+

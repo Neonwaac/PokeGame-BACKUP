@@ -1,4 +1,3 @@
-// lib/pages/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pokegame/components/select_button.dart';
@@ -9,7 +8,8 @@ import 'package:pokegame/pages/ranking_page.dart';
 import 'package:pokegame/services/auth/auth_gate.dart';
 import 'package:pokegame/services/auth/auth_service.dart';
 import 'package:pokegame/services/game/score_service.dart';
-import 'package:pokegame/themes/palette.dart';
+import 'package:pokegame/themes/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +31,6 @@ class _HomePageState extends State<HomePage>
       duration: const Duration(milliseconds: 1000),
     );
 
-    // Animaciones escalonadas para cada botón
     _slideAnimations = List.generate(
       4,
       (index) => Tween<Offset>(
@@ -65,12 +64,36 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final user = FirebaseAuth.instance.currentUser;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.primaryPurple,
+      appBar: AppBar(
+        backgroundColor: colorScheme.onPrimary,
+        actions: [
+          Row(
+            children: [
+              Icon(
+                themeProvider.isDarkMode
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+                color: colorScheme.onSecondary,
+              ),
+              Switch(
+                value: themeProvider.isDarkMode,
+                onChanged: (value) {
+                  themeProvider.toggleTheme(value);
+                },
+                activeThumbColor: colorScheme.onSecondary,
+                inactiveThumbColor: colorScheme.onPrimary,
+              ),
+            ],
+          ),
+        ],
+      ),
       body: SafeArea(
-        child: SingleChildScrollView( // ✅ permite scroll y evita overflow
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: Column(
@@ -84,7 +107,7 @@ class _HomePageState extends State<HomePage>
                 Text(
                   "Menú de selección",
                   style: textTheme.headlineLarge?.copyWith(
-                    color: AppColors.accentGreen,
+                    color: colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -126,30 +149,32 @@ class _HomePageState extends State<HomePage>
                 if (user == null)
                   TextButton(
                     onPressed: () => goTo(context, const AuthGate()),
-                    child: const Text(
+                    child: Text(
                       "Iniciar Sesión",
-                      style: TextStyle(
-                        color: AppColors.accentGreen,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                   )
                 else ...[
-                  // ✅ Tarjeta con email y score
                   Container(
-                    
                     width: 320,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      gradient: const LinearGradient(
-                        colors: [AppColors.accentBlue, AppColors.accentGreen],
+                      gradient: LinearGradient(
+                        colors: [
+                          colorScheme.surface,
+                          colorScheme.primary,
+
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.shadow,
+                          color: colorScheme.shadow,
                           blurRadius: 6,
                           offset: const Offset(0, 4),
                         ),
@@ -158,12 +183,11 @@ class _HomePageState extends State<HomePage>
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: Column(
-                      
                       children: [
                         Text(
                           user.email ?? "Usuario",
                           style: textTheme.bodyLarge?.copyWith(
-                            color: AppColors.white,
+                            color: colorScheme.onPrimary, 
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -173,16 +197,16 @@ class _HomePageState extends State<HomePage>
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator(
+                              return CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: AppColors.white,
+                                color: colorScheme.onPrimary,
                               );
                             }
                             final score = snapshot.data ?? 0;
                             return Text(
                               "Puntuación total: $score",
                               style: textTheme.bodyLarge?.copyWith(
-                                color: AppColors.white,
+                                color: colorScheme.onPrimary,
                                 fontSize: 16,
                               ),
                             );
@@ -194,10 +218,9 @@ class _HomePageState extends State<HomePage>
 
                   const SizedBox(height: 20),
 
-                  // 🔹 Botón cerrar sesión
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.redAccent,
+                      backgroundColor: colorScheme.error,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -214,10 +237,10 @@ class _HomePageState extends State<HomePage>
                         (route) => false,
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       "Cerrar Sesión",
-                      style: TextStyle(
-                        color: AppColors.white,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onError,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
@@ -232,4 +255,3 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
-

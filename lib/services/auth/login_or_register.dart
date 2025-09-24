@@ -1,4 +1,3 @@
-// lib/pages/login_or_register.dart
 import 'package:flutter/material.dart';
 import 'package:pokegame/pages/login_page.dart';
 import 'package:pokegame/pages/register_page.dart';

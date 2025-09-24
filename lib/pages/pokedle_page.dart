@@ -7,7 +7,6 @@ import '../components/custom_button.dart';
 import '../components/letter_box.dart';
 import '../services/game/pokedle_service.dart';
 import '../models/pokemon.dart';
-import '../themes/palette.dart';
 import '../services/game/score_service.dart';
 
 // feedback enum
@@ -125,7 +124,6 @@ class _PokedlePageState extends State<PokedlePage> {
       _controller.clear();
     });
 
-    // ✅ Manejo de navegación al resultado
     final int attempt = _guesses.length;
     if (isCorrect || _gameOver) {
       int points = 0;
@@ -194,11 +192,18 @@ class _PokedlePageState extends State<PokedlePage> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: AppColors.primaryPurple,
+      backgroundColor: colorScheme.background,
       appBar: const HeaderBack(title: 'Pokedle'),
       body: _pokemon == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+                color: colorScheme.primary,
+              ),
+            )
           : SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -227,10 +232,9 @@ class _PokedlePageState extends State<PokedlePage> {
                               _isWin
                                   ? '¡Adivinaste! Era ${_pokemon!.name}'
                                   : 'Perdiste. El Pokémon era ${_pokemon!.name}',
-                              style: const TextStyle(
-                                fontFamily: 'PixelifySans',
-                                color: AppColors.white,
-                                fontSize: 18,
+                              style: textTheme.bodyLarge?.copyWith(
+                                color: colorScheme.onBackground,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -261,4 +265,5 @@ class _PokedlePageState extends State<PokedlePage> {
     );
   }
 }
+
 

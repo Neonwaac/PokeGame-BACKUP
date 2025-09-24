@@ -4,7 +4,6 @@ import '../services/game/score_service.dart';
 import '../models/score.dart';
 import '../components/score_tile.dart';
 import '../components/header_back.dart';
-import '../themes/palette.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -49,23 +48,20 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppColors.purpleDark, AppColors.primaryPurple],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+      // No background hardcodeado: usa el background del Theme (como en HomePage)
+      appBar: const HeaderBack(title: "Ranking"),
+      body: SafeArea(
         child: Column(
           children: [
-            const HeaderBack(title: "Ranking"),
             Expanded(
               child: _loading
-                  ? const Center(
+                  ? Center(
                       child: CircularProgressIndicator(
-                        color: AppColors.accentGreen,
+                        color: colorScheme.primary,
                       ),
                     )
                   : _error != null
@@ -76,10 +72,9 @@ class _RankingPageState extends State<RankingPage> {
                               children: [
                                 Text(
                                   _error!,
-                                  style: const TextStyle(
-                                    color: AppColors.white,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.primary,
                                     fontSize: 16,
-                                    fontFamily: 'PixelifySans',
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -87,17 +82,15 @@ class _RankingPageState extends State<RankingPage> {
                                 ElevatedButton(
                                   onPressed: _loadScores,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.accentGreen,
+                                    backgroundColor: colorScheme.primary,
+                                    foregroundColor: colorScheme.onPrimary,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "Reintentar",
-                                    style: TextStyle(
-                                      fontFamily: 'PixelifySans',
-                                      fontSize: 14,
-                                    ),
+                                    style: textTheme.bodyMedium,
                                   ),
                                 ),
                               ],
@@ -106,7 +99,7 @@ class _RankingPageState extends State<RankingPage> {
                         )
                       : RefreshIndicator(
                           onRefresh: _loadScores,
-                          color: AppColors.accentGreen,
+                          color: colorScheme.primary,
                           child: ListView.builder(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 12, horizontal: 16),
@@ -120,17 +113,17 @@ class _RankingPageState extends State<RankingPage> {
                                     child: Center(
                                       child: Text(
                                         "🏆 Top jugadores 🏆",
-                                        style: const TextStyle(
-                                          fontFamily: 'PixelifySans',
-                                          fontSize: 22,
+                                        style:
+                                            textTheme.headlineSmall?.copyWith(
+                                          color: colorScheme.primary,
                                           fontWeight: FontWeight.bold,
-                                          color: AppColors.white,
                                         ),
                                       ),
                                     ),
                                   ),
                                 );
                               }
+
                               final score = _scores[index - 1];
                               return FadeInUp(
                                 delay: Duration(milliseconds: 100 * index),

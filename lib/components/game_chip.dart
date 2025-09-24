@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokegame/themes/palette.dart';
 
 class GameChip extends StatelessWidget {
   final String imageUrl;
@@ -20,9 +21,9 @@ class GameChip extends StatelessWidget {
     Color borderColor = colors.outline;
 
     if (isSelected && isCorrect) {
-      borderColor = colors.secondary;
+      borderColor = AppColors.greenDark;
     } else if (isSelected && !isCorrect) {
-      borderColor = colors.error;
+      borderColor = AppColors.errorRed;
     }
 
     return GestureDetector(
@@ -35,7 +36,7 @@ class GameChip extends StatelessWidget {
           boxShadow: [
             if (isSelected)
               BoxShadow(
-                color: borderColor.withOpacity(0.6),
+                color: borderColor,
                 blurRadius: 10,
                 spreadRadius: 2,
               ),
@@ -50,4 +51,5 @@ class GameChip extends StatelessWidget {
     );
   }
 }
+
 

@@ -24,12 +24,12 @@ class _AuthGateState extends State<AuthGate> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    // 🔹 Si el usuario YA está logueado -> lo mando a HomePage
+    // Si el usuario YA está logueado lo manda a HomePage
     if (user != null) {
       return const HomePage();
     }
 
-    // 🔹 Si no, muestro login o register según toggle
+    // Si no, muestro login o register según toggle
     return showLogin
         ? LoginPage(onRegisterTap: togglePages)
         : RegisterPage(onLoginTap: togglePages);

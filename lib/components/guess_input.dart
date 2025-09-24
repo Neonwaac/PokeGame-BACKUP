@@ -48,7 +48,7 @@ class GuessInput extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(
-              color: colors.onSurface.withOpacity(0.6),
+              color: colors.onSurface,
             ),
             filled: true,
             fillColor: colors.surface,
@@ -110,4 +110,5 @@ class GuessInput extends StatelessWidget {
     );
   }
 }
+
 

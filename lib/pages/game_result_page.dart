@@ -17,15 +17,7 @@ class GameResultPage extends StatelessWidget {
     final int totalScore = previousScore + gainedScore;
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(
-            colors: [AppColors.purpleDark, AppColors.primaryPurple],
-            center: Alignment(0, -0.4),
-            radius: 1.2,
-          ),
-        ),
-        child: SafeArea(
+      body: SafeArea(
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(24),
@@ -126,7 +118,6 @@ class GameResultPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

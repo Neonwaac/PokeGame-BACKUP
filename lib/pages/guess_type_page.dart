@@ -1,7 +1,5 @@
-// lib/pages/guess_type_page.dart
 import 'package:flutter/material.dart';
 import 'package:pokegame/pages/game_result_page.dart';
-import 'package:pokegame/themes/palette.dart';
 import '../components/header_back.dart';
 import '../components/game_chip.dart';
 import '../services/game/guess_type_service.dart';
@@ -69,8 +67,7 @@ class _GuessTypePageState extends State<GuessTypePage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) =>
-                GameResultPage(previousScore: prev, gainedScore: 3),
+            builder: (_) => GameResultPage(previousScore: prev, gainedScore: 3),
           ),
         );
       } catch (e) {
@@ -79,8 +76,13 @@ class _GuessTypePageState extends State<GuessTypePage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('¡Ganaste! Era ${_pokemon!.name}'),
-          backgroundColor: AppColors.successGreen,
+          content: Text(
+            '¡Ganaste! Era ${_pokemon!.name}',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
       );
     } else if (!isCorrect) {
@@ -94,28 +96,28 @@ class _GuessTypePageState extends State<GuessTypePage> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: AppColors.primaryPurple,
       appBar: const HeaderBack(title: "¿Qué tipo es?"),
       body: _pokemon == null
-          ? const Center(
-              child: CircularProgressIndicator(color: AppColors.accentGreen))
+          ? Center(child: CircularProgressIndicator(color: colors.primary))
           : Column(
               children: [
                 const SizedBox(height: 16),
 
-                // Pokémon en el centro
+                /// Pokémon en el centro con estilo
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.purpleTransparent,
+                    color: colors.surface,
                     borderRadius: BorderRadius.circular(100),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: AppColors.purpleDark,
+                        color: colors.shadow,
                         blurRadius: 8,
-                        offset: Offset(0, 4),
-                      )
+                        offset: const Offset(0, 4),
+                      ),
                     ],
                   ),
                   child: Image.network(
@@ -127,10 +129,10 @@ class _GuessTypePageState extends State<GuessTypePage> {
 
                 const SizedBox(height: 20),
 
-                // Grid con chips
+                /// Grid de chips
                 Expanded(
                   child: GridView.count(
-                    crossAxisCount: 4, // 👉 4 columnas fijas
+                    crossAxisCount: 4,
                     padding: const EdgeInsets.all(16),
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,

@@ -1,6 +1,4 @@
-// lib/components/profile_card.dart
 import 'package:flutter/material.dart';
-import '../themes/palette.dart';
 
 class ProfileCard extends StatefulWidget {
   final int previousScore;
@@ -42,21 +40,22 @@ class _ProfileCardState extends State<ProfileCard>
   @override
   Widget build(BuildContext context) {
     final total = widget.previousScore + widget.gainedScore;
+    final colors = Theme.of(context).colorScheme;
 
     return ScaleTransition(
       scale: _scaleAnimation,
       child: Card(
-        color: AppColors.pinkAccent,
+        color: colors.surfaceVariant,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(
-            color: AppColors.primaryPurple,
+          side: BorderSide(
+            color: colors.primary,
             width: 2,
           ),
         ),
         elevation: 6,
-        shadowColor: AppColors.primaryPurple,
+        shadowColor: colors.primary,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -64,37 +63,34 @@ class _ProfileCardState extends State<ProfileCard>
             children: [
               CircleAvatar(
                 radius: 36,
-                backgroundColor: AppColors.accentGreen,
-                child: const Icon(Icons.person, size: 40, color: AppColors.white),
+                backgroundColor: colors.secondary,
+                child: Icon(Icons.person, size: 40, color: colors.onSecondary),
               ),
               const SizedBox(height: 12),
               Text(
                 "Tu puntos totales: ${widget.previousScore}",
-                style: const TextStyle(
-                  color: AppColors.primaryPurple,
-                  fontSize: 16,
-                  fontFamily: 'PixelifySans',
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: colors.primary,
+                      fontFamily: 'PixelifySans',
+                    ),
               ),
               const SizedBox(height: 6),
               Text(
                 "Puntos ganados: ${widget.gainedScore > 0 ? "+${widget.gainedScore}" : widget.gainedScore}",
-                style: const TextStyle(
-                  color: AppColors.accentGreen,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'PixelifySans',
-                ),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: colors.secondary,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'PixelifySans',
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
                 "Total: $total",
-                style: const TextStyle(
-                  color: AppColors.primaryPurple,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'PixelifySans',
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: colors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'PixelifySans',
+                    ),
               ),
             ],
           ),
@@ -103,4 +99,5 @@ class _ProfileCardState extends State<ProfileCard>
     );
   }
 }
+
 

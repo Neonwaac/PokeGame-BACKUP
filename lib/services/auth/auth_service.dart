@@ -1,16 +1,15 @@
-// lib/services/auth_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  // 🔹 Obtener usuario actual
+  // Obtener usuario actual
   User? get currentUser => _firebaseAuth.currentUser;
 
-  // 🔹 Escuchar cambios de sesión
+  // Escuchar cambios de sesión
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  // 🔹 Registro
+  // Registro
   Future<User?> signUp({required String email, required String password}) async {
     try {
       UserCredential userCredential = await _firebaseAuth
@@ -21,7 +20,7 @@ class AuthService {
     }
   }
 
-  // 🔹 Login
+  // Login
   Future<User?> signIn({required String email, required String password}) async {
     try {
       UserCredential userCredential = await _firebaseAuth
@@ -32,7 +31,7 @@ class AuthService {
     }
   }
 
-  // 🔹 Logout
+  // Logout
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }

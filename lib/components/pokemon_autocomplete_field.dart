@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokegame/themes/palette.dart';
 
 class PokemonAutocompleteField extends StatelessWidget {
   final TextEditingController controller;
@@ -19,6 +18,8 @@ class PokemonAutocompleteField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) {
         final input = textEditingValue.text.toLowerCase();
@@ -30,28 +31,33 @@ class PokemonAutocompleteField extends StatelessWidget {
         controller.text = selection;
         if (onSelected != null) onSelected!(selection);
       },
-      fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmittedLocal) {
+      fieldViewBuilder: (context, textEditingController, focusNode, _) {
         return TextField(
           controller: controller,
           focusNode: focusNode,
-          style: const TextStyle(
-            color: AppColors.black,
-            fontFamily: 'PixelifySans',
-            fontSize: 16,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: colors.onSurface,
+                fontFamily: 'PixelifySans',
+              ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(color: AppColors.neutralGray),
+            hintStyle: TextStyle(
+              color: colors.onSurface,
+              fontFamily: 'PixelifySans',
+            ),
             filled: true,
-            fillColor: AppColors.white,
-            contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            fillColor: colors.surface,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: AppColors.neutralGray, width: 1.5),
+              borderSide: BorderSide(color: colors.outline, width: 1.5),
               borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: AppColors.accentGreen, width: 2.5),
+              borderSide: BorderSide(color: colors.secondary, width: 2.5),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
@@ -63,21 +69,11 @@ class PokemonAutocompleteField extends StatelessWidget {
         return Align(
           alignment: Alignment.topLeft,
           child: Material(
-            color: Colors.transparent,
-            child: Container(
-              margin: const EdgeInsets.only(top: 4),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primaryPurple.withOpacity(0.3),
-                    offset: const Offset(2, 2),
-                    blurRadius: 6,
-                  )
-                ],
-              ),
-              width: MediaQuery.of(context).size.width - 48,
+            color: colors.surface,
+            elevation: 6,
+            borderRadius: BorderRadius.circular(12),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 250),
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
@@ -87,13 +83,12 @@ class PokemonAutocompleteField extends StatelessWidget {
                   return ListTile(
                     title: Text(
                       opt,
-                      style: const TextStyle(
-                        fontFamily: 'PixelifySans',
-                        fontSize: 16,
-                        color: AppColors.primaryPurple,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontFamily: 'PixelifySans',
+                            color: colors.primary,
+                          ),
                     ),
-                    hoverColor: AppColors.accentGreen.withOpacity(0.2),
+                    hoverColor: colors.secondary,
                     onTap: () => onSelectedOpt(opt),
                   );
                 },
@@ -105,4 +100,5 @@ class PokemonAutocompleteField extends StatelessWidget {
     );
   }
 }
+
 

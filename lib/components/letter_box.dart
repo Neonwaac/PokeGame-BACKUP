@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokegame/themes/palette.dart';
 
 enum LetterState { empty, correct, present, absent }
 
@@ -17,24 +16,28 @@ class LetterBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     Color bg;
-    Color textColor = AppColors.white;
+    Color textColor = colors.onPrimary;
 
     switch (state) {
       case LetterState.correct:
-        bg = AppColors.accentGreen;
+        bg = colors.secondary;
+        textColor = colors.onSecondary;
         break;
       case LetterState.present:
-        bg = const Color(0xFFFFC107);
-        textColor = AppColors.primaryPurple;
+        bg = colors.tertiary;
+        textColor = colors.onTertiary;
         break;
       case LetterState.absent:
-        bg = const Color(0xFFEF5350);
+        bg = colors.error;
+        textColor = colors.onError;
         break;
       case LetterState.empty:
       default:
-        bg = Colors.purpleAccent.shade100;
-        textColor = AppColors.primaryPurple;
+        bg = colors.surface;
+        textColor = colors.onSurfaceVariant;
         break;
     }
 
@@ -46,10 +49,10 @@ class LetterBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.primaryPurple, width: 2),
+        border: Border.all(color: colors.primary, width: 2),
         boxShadow: [
           BoxShadow(
-            color: AppColors.purpleTransparent,
+            color: colors.primary,
             offset: const Offset(2, 2),
             blurRadius: 4,
           ),
