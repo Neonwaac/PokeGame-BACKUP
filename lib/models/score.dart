@@ -1,27 +1,23 @@
+// lib/models/score.dart
 class Score {
+  final String id;
   final String userId;
+  final String? email;
   final int score;
-  final DateTime timestamp;
 
   Score({
+    required this.id,
     required this.userId,
+    this.email,
     required this.score,
-    required this.timestamp,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "userId": userId,
-      "score": score,
-      "timestamp": timestamp.toIso8601String(),
-    };
-  }
-
-  factory Score.fromJson(Map<String, dynamic> json) {
+  factory Score.fromFirestore(Map<String, dynamic> data, String id) {
     return Score(
-      userId: json['userId'],
-      score: json['score'],
-      timestamp: DateTime.parse(json['timestamp']),
+      id: id,
+      userId: data['userId'] ?? '',
+      email: data['email'],
+      score: data['score'] ?? 0,
     );
   }
 }

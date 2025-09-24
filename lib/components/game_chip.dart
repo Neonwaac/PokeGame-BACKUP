@@ -1,46 +1,53 @@
 import 'package:flutter/material.dart';
 
 class GameChip extends StatelessWidget {
-  final String label;
+  final String imageUrl;
   final bool isSelected;
-  final void Function()? onTap;
+  final bool isCorrect;
+  final VoidCallback onTap;
 
   const GameChip({
     super.key,
-    required this.label,
-    required this.isSelected,
+    required this.imageUrl,
     required this.onTap,
+    this.isSelected = false,
+    this.isCorrect = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    Color borderColor = colors.outline;
+
+    if (isSelected && isCorrect) {
+      borderColor = colors.secondary;
+    } else if (isSelected && !isCorrect) {
+      borderColor = colors.error;
+    }
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: isSelected
-              ? Theme.of(context).colorScheme.secondary
-              : Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: Theme.of(context).colorScheme.secondary,
-            width: 1.5,
-          ),
+          shape: BoxShape.circle,
+          border: Border.all(color: borderColor, width: 3),
+          boxShadow: [
+            if (isSelected)
+              BoxShadow(
+                color: borderColor.withOpacity(0.6),
+                blurRadius: 10,
+                spreadRadius: 2,
+              ),
+          ],
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'PixelifySans',
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: isSelected
-                ? Theme.of(context).colorScheme.onSecondary
-                : Theme.of(context).colorScheme.primary,
-          ),
+        child: CircleAvatar(
+          radius: 22,
+          backgroundColor: colors.surface,
+          backgroundImage: NetworkImage(imageUrl),
         ),
       ),
     );
   }
 }
+

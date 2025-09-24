@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokegame/themes/palette.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -16,24 +15,37 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         decoration: BoxDecoration(
-          color: AppColors.accentGreen,
-          borderRadius: BorderRadius.circular(8),
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.secondary.withBlue(3),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 25),
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
-              color: AppColors.primaryPurple,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'PixelifySans',
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         ),
       ),
     );
   }
 }
+

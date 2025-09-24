@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokegame/themes/palette.dart';
 
 class HeaderBack extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -8,19 +9,28 @@ class HeaderBack extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title,
-          style: Theme.of(context).textTheme.headlineLarge),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: AppColors.primaryPurple,
+          fontFamily: 'PixelifySans',
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+          letterSpacing: 1.5,
+        ),
+      ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back,
-            color: Theme.of(context).colorScheme.secondary),
+        icon: const Icon(Icons.arrow_back, color: AppColors.primaryPurple),
         onPressed: () => Navigator.pop(context),
       ),
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      elevation: 0,
+      backgroundColor: AppColors.accentGreen,
+      elevation: 6,
+      shadowColor: AppColors.purpleTransparent,
     );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+

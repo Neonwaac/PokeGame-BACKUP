@@ -16,13 +16,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final authService = AuthService();
+  bool isLoading = false;
 
   void register() async {
+    setState(() => isLoading = true);
     try {
       await authService.signUp(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      if (mounted) Navigator.pop(context); // ✅ vuelve al AuthGate
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -33,6 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
       );
+    } finally {
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -41,74 +46,87 @@ class _RegisterPageState extends State<RegisterPage> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.accentGreen,
-        title: const Text(
-          "Registrarse",
-          style: TextStyle(color: AppColors.primaryPurple),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppColors.primaryPurple, AppColors.accentGreen],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.primaryPurple),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
         child: Center(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // 🔹 Logo vacío
-                Image.network("https://i.imgur.com/UazX9hl.png", height: 180),
-                const SizedBox(height: 32),
-
-                // 🔹 Título
-                Text("Regístrate", style: textTheme.headlineLarge),
-                const SizedBox(height: 24),
-
-                // 🔹 Campo Email
-                CustomTextField(
-                  hintText: "Correo",
-                  obscureText: false,
-                  controller: emailController,
-                  prefixIcon: Icons.email,
-                ),
-                const SizedBox(height: 16),
-
-                // 🔹 Campo Password
-                CustomTextField(
-                  hintText: "Contraseña",
-                  obscureText: true,
-                  controller: passwordController,
-                  prefixIcon: Icons.lock,
-                ),
-                const SizedBox(height: 24),
-
-                // 🔹 Botón Registro
-                CustomButton(text: "Registrarse", onTap: register),
-                const SizedBox(height: 16),
-
-                // 🔹 Cambiar a Login
-                TextButton(
-                  onPressed: widget.onLoginTap,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "¿Ya tienes cuenta? ",
-                        style: TextStyle(color: AppColors.accentGreen),
+            child: Card(
+              color: AppColors.purpleTransparent,
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              margin: const EdgeInsets.all(24),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    AnimatedScale(
+                      scale: 1,
+                      duration: const Duration(milliseconds: 800),
+                      curve: Curves.elasticOut,
+                      child: Image.network(
+                        "https://i.imgur.com/UazX9hl.png",
+                        height: 120,
                       ),
-                      const Text(
-                        "Inicia sesión",
-                        style: TextStyle(
-                          color: Colors.pink,
+                    ),
+                    const SizedBox(height: 24),
+
+                    Text("Regístrate",
+                        style: textTheme.headlineSmall?.copyWith(
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
+                        )),
+                    const SizedBox(height: 24),
+
+                    CustomTextField(
+                      hintText: "Correo",
+                      obscureText: false,
+                      controller: emailController,
+                      prefixIcon: Icons.email,
+                    ),
+                    const SizedBox(height: 16),
+                    CustomTextField(
+                      hintText: "Contraseña",
+                      obscureText: true,
+                      controller: passwordController,
+                      prefixIcon: Icons.lock,
+                    ),
+                    const SizedBox(height: 24),
+
+                    isLoading
+                        ? const CircularProgressIndicator(
+                            color: AppColors.accentGreen)
+                        : CustomButton(text: "Registrarse", onTap: register),
+
+                    const SizedBox(height: 16),
+                    TextButton(
+                      onPressed: widget.onLoginTap,
+                      child: const Text.rich(
+                        TextSpan(
+                          text: "¿Ya tienes cuenta? ",
+                          style: TextStyle(color: AppColors.accentGreen),
+                          children: [
+                            TextSpan(
+                              text: "Inicia sesión",
+                              style: TextStyle(
+                                color: Colors.pink,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

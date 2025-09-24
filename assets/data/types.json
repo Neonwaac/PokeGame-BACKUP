@@ -1,0 +1,20 @@
+[
+  { "name": "normal", "imageUrl": "https://i.imgur.com/tCkbxha.png" },
+  { "name": "fire", "imageUrl": "https://i.imgur.com/8n7YWk6.png" },
+  { "name": "water", "imageUrl": "https://i.imgur.com/dmb1wRw.png" },
+  { "name": "grass", "imageUrl": "https://i.imgur.com/NDOf4zW.png" },
+  { "name": "electric", "imageUrl": "https://i.imgur.com/CHxQXgf.png" },
+  { "name": "ice", "imageUrl": "https://i.imgur.com/99smq8d.png" },
+  { "name": "fighting", "imageUrl": "https://i.imgur.com/T5RVe4o.png" },
+  { "name": "poison", "imageUrl": "https://i.imgur.com/sLX2eDt.png" },
+  { "name": "ground", "imageUrl": "https://i.imgur.com/ac6croW.png" },
+  { "name": "flying", "imageUrl": "https://i.imgur.com/jPnYCTn.png" },
+  { "name": "psychic", "imageUrl": "https://i.imgur.com/1V4XO9w.png" },
+  { "name": "bug", "imageUrl": "https://i.imgur.com/RND3fNt.png" },
+  { "name": "rock", "imageUrl": "https://i.imgur.com/A0gBBnw.png" },
+  { "name": "ghost", "imageUrl": "https://i.imgur.com/KHqxSF4.png" },
+  { "name": "dragon", "imageUrl": "https://i.imgur.com/3H3zDK9.png" },
+  { "name": "dark", "imageUrl": "https://i.imgur.com/GDq9xWK.png" },
+  { "name": "steel", "imageUrl": "https://i.imgur.com/qnLTMO1.png" },
+  { "name": "fairy", "imageUrl": "https://i.imgur.com/5Hp2kuk.png" }
+]

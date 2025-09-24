@@ -15,29 +15,40 @@ class SelectButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      
       child: Container(
         width: 320,
         height: 80,
-        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
         decoration: BoxDecoration(
-          gradient: LinearGradient(                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,colors:[Colors.deepPurple,const Color.fromARGB(255, 121, 89, 212), AppColors.accentGreen]),
-          borderRadius: BorderRadius.circular(8),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.deepPurple,
+              Color.fromARGB(255, 121, 89, 212),
+              AppColors.accentGreen,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.shadow,
+              offset: const Offset(3, 3),
+              blurRadius: 6,
+            ),
+          ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: AspectRatio(
-            aspectRatio: 1600 / 400,
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
+          borderRadius: BorderRadius.circular(12),
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
         ),
       ),
     );
   }
 }
+

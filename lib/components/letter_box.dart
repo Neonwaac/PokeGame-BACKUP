@@ -1,4 +1,3 @@
-// lib/components/letter_box.dart
 import 'package:flutter/material.dart';
 import 'package:pokegame/themes/palette.dart';
 
@@ -26,15 +25,15 @@ class LetterBox extends StatelessWidget {
         bg = AppColors.accentGreen;
         break;
       case LetterState.present:
-        bg = const Color(0xFFFFC107); // amarillo
+        bg = const Color(0xFFFFC107);
         textColor = AppColors.primaryPurple;
         break;
       case LetterState.absent:
-        bg = const Color(0xFFEF5350); // rojo
+        bg = const Color(0xFFEF5350);
         break;
       case LetterState.empty:
       default:
-        bg = AppColors.boneWhite;
+        bg = Colors.purpleAccent.shade100;
         textColor = AppColors.primaryPurple;
         break;
     }
@@ -46,7 +45,15 @@ class LetterBox extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.primaryPurple, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.purpleTransparent,
+            offset: const Offset(2, 2),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: Text(
         (letter.isEmpty) ? '' : letter.toUpperCase(),
